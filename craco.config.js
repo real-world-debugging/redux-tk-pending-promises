@@ -16,7 +16,7 @@ const dbuxOptions = {
      * NOTEs:
      * 1. we blacklist some of these since they mostly muddy the search space.
      * 2. Some of these are polyfills (probably brought in by CRA) and their libraries (loaded when first requiring things, and before `@dbux/runtime`?)
-     * 3. react-error-overlay brings in `async-generator-runtime`, and it does not like to be touched
+     * 3. react-error-overlay brings in `async-generator-runtime`, and... reasons...?
      */
     packageBlacklist: 'react-dev-utils,react-refresh,react-error-overlay,process,buffer,isarray,ieee754,base64-js',
     fileWhitelist: '.*',

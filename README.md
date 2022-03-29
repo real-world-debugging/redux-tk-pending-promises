@@ -1,3 +1,15 @@
+## Getting Started
+
+```bash
+npm install
+npm start
+```
+
+→ In the interface, press the `Foobar` button
+→ Observe console
+→ The two results are pending, but should not be.
+
+
 ## Repro
 
 This is what we did to reproduce this bug:
