@@ -1,0 +1,58 @@
+{
+  "name": "vanilla-typescript",
+  "version": "1.0.0",
+  "description": "JavaScript and TypeScript example starter project",
+  "main": "src/index.tsx",
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "1.8.0",
+    "lodash": "4.17.21",
+    "msw": "0.39.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-redux": "7.2.6",
+    "react-scripts": "^4"
+  },
+  "devDependencies": {
+    "@craco/craco": "^6.4.3",
+    "@dbux/babel-plugin": "file:.yalc/@dbux/babel-plugin",
+    "@dbux/babel-register-fork": "file:.yalc/@dbux/babel-register-fork",
+    "@dbux/cli": "file:.yalc/@dbux/cli",
+    "@dbux/common": "file:.yalc/@dbux/common",
+    "@dbux/common-node": "file:.yalc/@dbux/common-node",
+    "@dbux/runtime": "file:.yalc/@dbux/runtime",
+    "@types/react": "17.0.20",
+    "@types/react-dom": "17.0.9",
+    "typescript": "4.6.3"
+  },
+  "resolutions": {
+    "@babel/preset-env": "7.13.8"
+  },
+  "keywords": [
+    "typescript",
+    "javascript",
+    "react"
+  ],
+  "author": "",
+  "license": "ISC",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}
