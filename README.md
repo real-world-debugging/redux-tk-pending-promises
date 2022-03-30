@@ -2,6 +2,9 @@
 
 ```bash
 npm install
+# add dbux here, e.g.: yalc add --dev @dbux/babel-plugin @dbux/runtime @dbux/cli @dbux/common @dbux/common-node @dbux/babel-register-fork
+# or:
+npm i -D @dbux/cli
 npm start
 ```
 
