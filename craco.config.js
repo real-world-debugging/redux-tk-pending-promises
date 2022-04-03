@@ -9,7 +9,11 @@ const DbuxEnabled = true;
 
 const dbuxOptions = {
   moduleFilter: {
-    packageWhitelist: '.*redux.*',
+    /**
+     * 1. we want redux and friends.
+     * 2. we want `immer` so we can actually properly observe the drafted objects it produces and its children.
+     */
+    packageWhitelist: '.*redux.*,immer',
     // packageWhitelist: '.*', // NOTE: quite slow
 
     /**
