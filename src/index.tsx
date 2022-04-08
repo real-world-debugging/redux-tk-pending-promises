@@ -29,9 +29,9 @@ const fetchCart = async () => {
   console.log("res2", res2);
   const result2 = await res2;
 
-  console.log("result await", result2);
+  console.log("1. await res2", result2);
   const result = await res;
-  console.log("result await", result);
+  console.log("2. await res", result, result2);
 };
 
 appReady.then(async () => {
