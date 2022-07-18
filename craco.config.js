@@ -7,6 +7,11 @@ const { inspect } = require('util');
 // const DbuxEnabled = false;
 const DbuxEnabled = true;
 
+/**
+ * NOTE: update this version to force a cache flush.
+ */
+const BabelCacheVersion = 2;
+
 const dbuxOptions = {
   moduleFilter: {
     /**
@@ -20,7 +25,7 @@ const dbuxOptions = {
      * NOTEs:
      * 1. we blacklist some of these since they mostly muddy the search space.
      * 2. Some of these are polyfills (probably brought in by CRA) and their libraries (loaded when first requiring things, and before `@dbux/runtime`?)
-     * 3. react-error-overlay brings in `async-generator-runtime`, and... reasons...?
+     * 3. react-error-overlay brings in `async-generator-runtime`
      */
     packageBlacklist: 'react-dev-utils,react-refresh,react-error-overlay,process,buffer,isarray,ieee754,base64-js',
     fileWhitelist: '.*',
@@ -30,12 +35,33 @@ const dbuxOptions = {
 };
 
 module.exports = {
-  devServer: {
-    writeToDisk: true
+  devServer: (devServerConfig, { env, paths, proxy, allowedHost }) => {
+    // enable writeToDisk
+    devServerConfig.writeToDisk = true;
+
+
+    /**
+     * Start watching changes on redux (and possibly other modules).
+     * NOTE: CRA has `watchOptions` on `devServer`, not on root.
+     * 
+     * @see https://github.com/facebook/create-react-app/blob/eadfad28f448fffd581c36b8769b32b51474962b/packages/react-scripts/config/webpackDevServer.config.js#L78
+     * @see https://stackoverflow.com/questions/41522721/how-to-watch-certain-node-modules-changes-with-webpack-dev-server
+     */
+    const ignored = devServerConfig.watchOptions?.ignored;
+    if (ignored) {
+      console.warn('ignored:\n  ', devServerConfig.watchOptions.ignored);
+    }
+
+    devServerConfig.watchOptions.ignored = [
+      /node_modules(?:[\\/]+)(?!@reduxjs|redux)/
+    ];
+
+    return devServerConfig;
   },
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
       if (DbuxEnabled) {
+
         const { hasFoundAny, matches } = getLoaders(webpackConfig, loaderByName("babel-loader"));
 
 
@@ -67,10 +93,10 @@ module.exports = {
         if (hasFoundAny) {
           matches.forEach(match => {
             const babelOptions = match.loader.options;
+            
+            babelOptions.cacheIdentifier += 'v' + BabelCacheVersion;
 
-            // console.log(`[craco] match ${inspect(
-            //   match.loader.options.presets
-            // )}`);
+            // console.log(`[craco] babelOptions: ${inspect(babelOptions)}`);
 
             if (!babelOptions.plugins) {
               babelOptions.plugins = [];
