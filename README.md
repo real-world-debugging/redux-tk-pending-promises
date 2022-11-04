@@ -1,21 +1,33 @@
 ## Getting Started
 
-```bash
-npm install
-# add dbux here, e.g.: yalc add --dev @dbux/babel-plugin @dbux/runtime @dbux/cli @dbux/common @dbux/common-node @dbux/babel-register-fork
-# or:
-npm i -D @dbux/cli
-npm start
-```
+1. Make sure, you have `Dbux` repository on this machine, and pushed to `yalc`.
+   * (→ run `yarn yalc` in the Dbux folder)
+2. Make sure, you have `redux-toolkit@1.8.0` on this machine, and pushed to `yalc`.
+   * (→ https://github.com/reduxjs/redux-toolkit/blob/master/CONTRIBUTING.md#getting-started)
+   * ```bash
+     git clone https://github.com/reduxjs/redux-toolkit.git &&\
+     cd ./redux-toolkit &&\
+     git checkout tags/v1.8.0 &&\
+     yarn
+   ```
+3. ```bash
+   npm install
+   npm start
+   ```
 
-→ In the interface, press the `Foobar` button
-→ Observe console
-→ The two results are pending, but should not be.
+## What is the bug?
+
+* In the interface, press the `Foobar` button.
+* Observe console.
+* → The two results are pending, but should not be.
 
 
-## Repro
+## Origin
 
-This is what we did to reproduce this bug:
+NOTE: This is based on a report from the #redux Discord channel.
+
+What we did to create this test case:
+
 
 * Download from https://codesandbox.io/s/flamboyant-benz-jhm3wj?file=/package.json
 * remove `types.ts`
@@ -30,6 +42,6 @@ This is what we did to reproduce this bug:
 * ```bash
   npx msw init public # setup msw
   npm install
-  npm i -D @craco/craco
+  npm i -D @craco/craco yalc
   yalc add --dev @dbux/babel-plugin @dbux/runtime @dbux/cli @dbux/common @dbux/common-node @dbux/babel-register-fork
   ```

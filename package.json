@@ -7,9 +7,17 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dbux-test1": "npx dbux r --verbose=2 --esnext --pw=.*redux.* ./dbux-test.js",
+    "yalc": "yalc update"
   },
   "dependencies": {
+    "@dbux/babel-plugin": "file:.yalc/@dbux/babel-plugin",
+    "@dbux/babel-register-fork": "file:.yalc/@dbux/babel-register-fork",
+    "@dbux/cli": "file:.yalc/@dbux/cli",
+    "@dbux/common": "file:.yalc/@dbux/common",
+    "@dbux/common-node": "file:.yalc/@dbux/common-node",
+    "@dbux/runtime": "file:.yalc/@dbux/runtime",
     "@reduxjs/toolkit": "1.8.0",
     "lodash": "4.17.21",
     "msw": "0.39.2",
@@ -19,13 +27,8 @@
     "react-scripts": "^4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.19.3",
     "@craco/craco": "^6.4.3",
-    "@dbux/babel-plugin": "file:.yalc/@dbux/babel-plugin",
-    "@dbux/babel-register-fork": "file:.yalc/@dbux/babel-register-fork",
-    "@dbux/cli": "file:.yalc/@dbux/cli",
-    "@dbux/common": "file:.yalc/@dbux/common",
-    "@dbux/common-node": "file:.yalc/@dbux/common-node",
-    "@dbux/runtime": "file:.yalc/@dbux/runtime",
     "@types/react": "17.0.20",
     "@types/react-dom": "17.0.9",
     "typescript": "4.6.3"

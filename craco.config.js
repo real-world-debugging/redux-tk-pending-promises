@@ -1,8 +1,9 @@
 /* craco.config.js */
-
 const { getLoaders, loaderByName } = require('@craco/craco');
+const path = require('path');
 
-const { inspect } = require('util');
+
+// const { inspect } = require('util');
 
 // const DbuxEnabled = false;
 const DbuxEnabled = true;
@@ -10,7 +11,7 @@ const DbuxEnabled = true;
 /**
  * NOTE: update this version to force a cache flush.
  */
-const BabelCacheVersion = 2;
+const BabelCacheVersion = 3;
 
 const dbuxOptions = {
   moduleFilter: {
@@ -53,18 +54,23 @@ module.exports = {
     }
 
     devServerConfig.watchOptions.ignored = [
-      /node_modules(?:[\\/]+)(?!@reduxjs|redux)/
+      /node_modules(?:[\\/]+)(?!@reduxjs|redux)/,
+      // /.*(?!@reduxjs|redux).*/
     ];
 
     return devServerConfig;
   },
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
+      // add aliases
+      const resolve = webpackConfig.resolve ||= {};
+      const alias = resolve.alias ||= {};
+
+      // hackfix: use no-type version of RTK
+      alias['@reduxjs/toolkit'] = path.resolve(`./node_modules/@reduxjs/toolkit/src-no-types/index.js`);
+
       if (DbuxEnabled) {
-
         const { hasFoundAny, matches } = getLoaders(webpackConfig, loaderByName("babel-loader"));
-
-
         // // TODO: write output files (this won't work, `devServer` does not exit)
         // webpackConfig.devServer.devMiddleware.writeToDisk = true;
 
@@ -93,7 +99,7 @@ module.exports = {
         if (hasFoundAny) {
           matches.forEach(match => {
             const babelOptions = match.loader.options;
-            
+
             babelOptions.cacheIdentifier += 'v' + BabelCacheVersion;
 
             // console.log(`[craco] babelOptions: ${inspect(babelOptions)}`);
@@ -101,6 +107,7 @@ module.exports = {
             if (!babelOptions.plugins) {
               babelOptions.plugins = [];
             }
+            babelOptions.plugins.push(['@babel/preset-typescript', {}]);
             babelOptions.plugins.push(['@dbux/babel-plugin', dbuxOptions]);
           });
           console.debug(`Added @dbux/babel-plugin to babel-loaders.`);
