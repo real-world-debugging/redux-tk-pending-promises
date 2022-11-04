@@ -1,6 +1,6 @@
 // const loadBabel = require('./loadBabel');
 
-console.log('babel.config HI')
+// console.log('babel.config HI')
 
 module.exports = {
   /**
@@ -17,7 +17,8 @@ module.exports = {
   ],
   plugins: [
     [
-      '@babel/plugin-transform-typescript'
+      '@babel/plugin-transform-typescript',
+      // TODO: fix TSX problems
     ],
   ]
 };
