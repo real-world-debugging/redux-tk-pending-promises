@@ -9,10 +9,15 @@ module.exports = {
    */
   ignore: [
     /\..*test\..*/,
-    /[\/\\]tests[\/\\]/
-    // (fpath) => {
-    //   // console.log(`[babel ignore] ${args}`);
-    //   return false;
-    // }
+    /[\/\\]tests[\/\\]/,
+    (fpath) => {
+      console.log(`[babel include] ${fpath}`);
+      return false;
+    }
+  ],
+  plugins: [
+    [
+      '@babel/plugin-transform-typescript'
+    ],
   ]
 };

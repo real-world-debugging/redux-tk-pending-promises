@@ -67,6 +67,8 @@ module.exports = {
       const alias = resolve.alias ||= {};
 
       // hackfix: use no-type version of RTK
+      alias['@reduxjs/toolkit/query/react'] = path.resolve(`./node_modules/@reduxjs/toolkit/src-no-types/query/react`);
+      alias['@reduxjs/toolkit/dist/query'] = alias['@reduxjs/toolkit/query'] = path.resolve(`./node_modules/@reduxjs/toolkit/src-no-types/query`);
       alias['@reduxjs/toolkit'] = path.resolve(`./node_modules/@reduxjs/toolkit/src-no-types/index.js`);
 
       if (DbuxEnabled) {
@@ -99,18 +101,22 @@ module.exports = {
         if (hasFoundAny) {
           matches.forEach(match => {
             const babelOptions = match.loader.options;
-
             babelOptions.cacheIdentifier += 'v' + BabelCacheVersion;
-
             // console.log(`[craco] babelOptions: ${inspect(babelOptions)}`);
-
             if (!babelOptions.plugins) {
               babelOptions.plugins = [];
             }
-            babelOptions.plugins.push(['@babel/preset-typescript', {}]);
+
+            babelOptions.plugins.push(...[
+              '@babel/plugin-proposal-nullish-coalescing-operator',   // `??`
+              '@babel/plugin-proposal-logical-assignment-operators',  // `??=`
+              '@babel/plugin-proposal-optional-chaining',
+              ['@babel/plugin-proposal-class-properties', { loose: true }],
+              '@babel/plugin-transform-react-jsx'
+            ]);
             babelOptions.plugins.push(['@dbux/babel-plugin', dbuxOptions]);
           });
-          console.debug(`Added @dbux/babel-plugin to babel-loaders.`);
+          console.debug(`[craco] Added @dbux/babel-plugin to babel-loaders.`);
         }
         else {
           throw new Error(`Could not inject Dbux: 'babel-loader' found`);

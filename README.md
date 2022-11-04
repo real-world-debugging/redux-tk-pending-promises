@@ -14,6 +14,8 @@
    npm install
    npm start
    ```
+4. Other things
+   * → `SkipToken`
 
 ## What is the bug?
 
