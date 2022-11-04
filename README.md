@@ -15,7 +15,7 @@
    npm start
    ```
 4. Other things
-   * → `SkipToken`
+   * → need to manually define `SkipToken = undefined` (it is an exported type that got removed, but should not have)
 
 ## What is the bug?
 
@@ -26,7 +26,7 @@
 
 ## Origin
 
-NOTE: This is based on a report from the #redux Discord channel.
+NOTE: This is based on a report from the `#redux` Discord channel.
 
 What we did to create this test case:
 
@@ -41,9 +41,10 @@ What we did to create this test case:
 * fix up `package.json`
   * remove `parcel`
   * change `react-scripts` to `^4` (because as of now, `craco` does not support 5)
+* Fix some build settings (because old `react-scripts` does supports less modern syntax)
 * ```bash
   npx msw init public # setup msw
   npm install
   npm i -D @craco/craco yalc
-  yalc add --dev @dbux/babel-plugin @dbux/runtime @dbux/cli @dbux/common @dbux/common-node @dbux/babel-register-fork
+  npm i -D @dbux/babel-plugin @dbux/runtime @dbux/cli @dbux/common @dbux/common-node @dbux/babel-register-fork
   ```
